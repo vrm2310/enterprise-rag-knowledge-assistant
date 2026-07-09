@@ -1,0 +1,52 @@
+[project]
+name = "enterprise-rag-knowledge-assistant-backend"
+version = "0.1.0"
+description = "Backend service for a production-grade Enterprise RAG Knowledge Assistant."
+readme = "../README.md"
+requires-python = ">=3.12,<3.13"
+
+dependencies = [
+    "alembic>=1.18.5",
+    "fastapi>=0.139.0",
+    "psycopg[binary]>=3.3.4",
+    "pwdlib>=0.3.0",
+    "pydantic>=2.13.4",
+    "pydantic-settings>=2.14.2",
+    "python-jose[cryptography]>=3.5.0",
+    "python-multipart>=0.0.32",
+    "sqlalchemy>=2.0.51",
+    "uvicorn[standard]>=0.51.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pyright>=1.1.411",
+    "pytest>=9.1.1",
+    "ruff>=0.15.20",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "UP",
+    "B",
+]
+
+ignore = []
+
+[tool.pyright]
+typeCheckingMode = "basic"
+pythonVersion = "3.12"
+venvPath = "."
+venv = ".venv"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

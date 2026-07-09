@@ -1,0 +1,85 @@
+name: enterprise-rag-knowledge-assistant
+
+services:
+  postgres:
+    image: postgres:17
+
+    container_name: rag_postgres
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+    # PostgreSQL is exposed on 5433 because 5432 is used by the local installation.
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - rag_network
+
+  redis:
+    image: redis:8
+
+    container_name: rag_redis
+
+    restart: unless-stopped
+
+    ports:
+      - "6379:6379"
+
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - rag_network
+
+  qdrant:
+    image: qdrant/qdrant:v1.15.3
+
+    container_name: rag_qdrant
+
+    restart: unless-stopped
+
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+    # Qdrant health check is temporarily disabled because the official image
+    # does not include curl. The backend will connect once the service starts.
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:6333/readyz"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+
+    networks:
+      - rag_network
+
+volumes:
+  postgres_data:
+    name: rag_postgres_data
+
+  qdrant_data:
+    name: rag_qdrant_data
+
+networks:
+  rag_network:
+    driver: bridge

@@ -7,9 +7,12 @@ from alembic import context
 from sqlalchemy import pool
 
 from app.core.config import settings
-from app.db.base import Base
+# from app.db.base import Base
 # Import models here so Alembic can detect them
 # from app.auth.models import User
+
+from app.db.base import Base
+import app.db.models
 
 config = context.config
 

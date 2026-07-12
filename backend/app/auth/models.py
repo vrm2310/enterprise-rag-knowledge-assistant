@@ -1,7 +1,12 @@
 from sqlalchemy import Boolean, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base_model import BaseModel
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.documents.models import Document
 
 
 class User(BaseModel):
@@ -34,4 +39,9 @@ class User(BaseModel):
         Boolean,
         default=False,
         nullable=False,
+    )
+
+    documents: Mapped[list["Document"]] = relationship(
+        back_populates="owner",
+        cascade="all, delete-orphan",
     )

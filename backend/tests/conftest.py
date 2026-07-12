@@ -7,7 +7,8 @@ from sqlalchemy.orm import sessionmaker
 
 from app.db.base import Base
 from app.db.session import get_db
-from app.main import app
+from app.main import app as fastapi_app
+import app.db.models
 
 os.environ["POSTGRES_DB"] = "rag_test_db"
 os.environ["POSTGRES_USER"] = "rag_user"
@@ -48,9 +49,9 @@ def override_get_db():
         db.close()
 
 
-app.dependency_overrides[get_db] = override_get_db
+fastapi_app.dependency_overrides[get_db] = override_get_db
 
 
 @pytest.fixture()
 def client():
-    return TestClient(app)
+    return TestClient(fastapi_app)

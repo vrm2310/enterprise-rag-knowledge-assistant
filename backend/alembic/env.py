@@ -10,7 +10,6 @@ from app.core.config import settings
 # from app.auth.models import User
 from app.db import models  # noqa: F401
 from app.db.base import Base
-import app.db.models
 
 config = context.config
 

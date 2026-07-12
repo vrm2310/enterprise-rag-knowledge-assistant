@@ -16,24 +16,24 @@ class Settings(BaseSettings):
     # -----------------------------
     # PostgreSQL
     # -----------------------------
-    postgres_db: str
-    postgres_user: str
-    postgres_password: str
-    postgres_host: str
-    postgres_port: int
+    postgres_db: str = ""
+    postgres_user: str = ""
+    postgres_password: str = ""
+    postgres_host: str = ""
+    postgres_port: int = 5432
 
     # -----------------------------
     # Redis
     # -----------------------------
-    redis_host: str
-    redis_port: int
+    redis_host: str = ""
+    redis_port: int = 6379
 
     # -----------------------------
     # Qdrant
     # -----------------------------
-    qdrant_host: str
-    qdrant_port: int
-    qdrant_collection: str
+    qdrant_host: str = ""
+    qdrant_port: int = 6333
+    qdrant_collection: str = ""
 
     @computed_field
     @property
@@ -50,6 +50,13 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra="ignore",
     )
+
+    # -----------------------------
+    # JWT
+    # -----------------------------
+    secret_key: str = ""
+    algorithm: str = "HS256"
+    access_token_expire_minutes: int = 30
 
 
 settings = Settings()

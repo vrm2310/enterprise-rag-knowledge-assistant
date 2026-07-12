@@ -47,5 +47,6 @@ class Document(BaseModel):
     )
 
     owner: Mapped["User"] = relationship(
+        "User",
         back_populates="documents",
     )

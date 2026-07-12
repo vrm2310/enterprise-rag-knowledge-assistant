@@ -8,7 +8,6 @@ from sqlalchemy.orm import sessionmaker
 from app.db.base import Base
 from app.db.session import get_db
 from app.main import app as fastapi_app
-import app.db.models
 
 os.environ["POSTGRES_DB"] = "rag_test_db"
 os.environ["POSTGRES_USER"] = "rag_user"

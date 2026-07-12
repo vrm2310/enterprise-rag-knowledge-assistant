@@ -42,6 +42,7 @@ class User(BaseModel):
     )
 
     documents: Mapped[list["Document"]] = relationship(
+        "Document",
         back_populates="owner",
         cascade="all, delete-orphan",
     )

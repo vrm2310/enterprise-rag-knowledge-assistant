@@ -1,6 +1,7 @@
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
+from fastapi.security import OAuth2PasswordBearer
 from jose import jwt
 from pwdlib import PasswordHash
 
@@ -13,6 +14,9 @@ def hash_password(password: str) -> str:
     """Hash a plain text password."""
     return password_hash.hash(password)
 
+oauth2_scheme = OAuth2PasswordBearer(
+    tokenUrl="/auth/login",
+)
 
 def verify_password(password: str, hashed_password: str) -> bool:
     """Verify a password against its hash."""

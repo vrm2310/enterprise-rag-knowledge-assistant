@@ -39,7 +39,9 @@ select = [
     "B",
 ]
 
-ignore = []
+ignore = [
+    "B008",
+]
 
 [tool.pyright]
 typeCheckingMode = "basic"

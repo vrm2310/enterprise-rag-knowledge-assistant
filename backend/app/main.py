@@ -5,6 +5,7 @@ import app.db.models  # noqa: F401
 from app.auth.router import router as auth_router
 from app.core.config import settings
 from app.db.session import engine
+from app.documents.router import router as documents_router
 
 
 def create_app() -> FastAPI:
@@ -15,6 +16,7 @@ def create_app() -> FastAPI:
     )
 
     app.include_router(auth_router)
+    app.include_router(documents_router)
 
     @app.get("/", tags=["Root"])
     def root() -> dict[str, str]:

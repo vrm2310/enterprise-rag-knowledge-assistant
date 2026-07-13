@@ -8,6 +8,7 @@ from app.documents.enums import DocumentStatus
 
 if TYPE_CHECKING:
     from app.auth.models import User
+    from app.chunks.models import DocumentChunk
 
 from uuid import UUID
 
@@ -49,4 +50,9 @@ class Document(BaseModel):
     owner: Mapped["User"] = relationship(
         "User",
         back_populates="documents",
+    )
+
+    chunks: Mapped[list["DocumentChunk"]] = relationship(
+        back_populates="document",
+        cascade="all, delete-orphan",
     )

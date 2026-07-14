@@ -60,5 +60,7 @@ class Settings(BaseSettings):
 
     upload_dir: str = "uploads"
 
+    embedding_model: str = "BAAI/bge-small-en-v1.5"
+
 
 settings = Settings()
